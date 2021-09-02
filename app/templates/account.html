@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>{{ 'Username: ' + current_user.username }}</h1>
+    <h1>{{ 'Email: ' + current_user.email }}</h1>
+    <h1>Posts:</h1>
+    {% for post in current_user.posts %}
+    <article class="media content-section">
+        <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ '@' + post.author.username }}</a>
+            <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            {% if post.author == current_user %}
+                <button type="button" class="btn btn-outline-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            {% endif %}
+        </div>
+        <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+        <img class="article-img center" src="{{ url_for('static', filename='posted_imgs/' + post.content) }}">
+        </div>
+    </article>
+    {% endfor %}
+{% endblock content %}
